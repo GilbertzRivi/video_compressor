@@ -33,9 +33,11 @@ if os.path.isfile(path_to_videos):
         exit()
 
     if compression_type == 'a':
+        accual_bitrate = int(json.loads(subprocess.run(shlex.split(f'ffprobe -v error -select_streams v:0 -show_entries stream=bit_rate -print_format json "{path_to_videos}"'), stdout=subprocess.PIPE).stdout)['streams'][0]['bit_rate'])
+        target_bitrate = accual_bitrate * ((100 - compression_factor)/100)
         folder, filename = os.path.split(path_to_videos)
         newpath = os.path.join(folder, 'compressed_' + filename)
-        os.system(f'ffmpeg -i "{path_to_videos}" -vcodec h264 -crf {compression_factor} "{newpath}"')
+        os.system(f'ffmpeg -i "{path_to_videos}" -vcodec h264 -crf {compression_factor} -maxrate {target_bitrate} -bufsize 128M "{newpath}"')
 
     elif compression_type == 'b':
         accual_bitrate = int(json.loads(subprocess.run(shlex.split(f'ffprobe -v error -select_streams v:0 -show_entries stream=bit_rate -print_format json "{path_to_videos}"'), stdout=subprocess.PIPE).stdout)['streams'][0]['bit_rate'])
@@ -55,8 +57,10 @@ elif os.path.isdir(path_to_videos):
         
         if compression_type == 'a':
             folder, filename = os.path.split(path)
+            accual_bitrate = int(json.loads(subprocess.run(shlex.split(f'ffprobe -v error -select_streams v:0 -show_entries stream=bit_rate -print_format json "{path}"'), stdout=subprocess.PIPE).stdout)['streams'][0]['bit_rate'])
+            target_bitrate = accual_bitrate * ((100 - compression_factor)/100)
             newpath = os.path.join(folder, 'compressed_' + filename)
-            os.system(f'ffmpeg -i "{path}" -vcodec h264 -crf {compression_factor} "{newpath}"')
+            os.system(f'ffmpeg -i "{path}" -vcodec h264 -crf {compression_factor} -maxrate {target_bitrate} -bufsize 128M "{newpath}"')
 
         elif compression_type == 'b':
             accual_bitrate = int(json.loads(subprocess.run(shlex.split(f'ffprobe -v error -select_streams v:0 -show_entries stream=bit_rate -print_format json "{path}"'), stdout=subprocess.PIPE).stdout)['streams'][0]['bit_rate'])
