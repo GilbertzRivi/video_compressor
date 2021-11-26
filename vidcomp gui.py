@@ -110,8 +110,10 @@ class MainWindow():
 
             for path in self.videos_names.get(0, END):
                 folder, filename = os.path.split(path)
+                accual_bitrate = int(json.loads(subprocess.run(shlex.split(f'ffprobe -v error -select_streams v:0 -show_entries stream=bit_rate -print_format json "{path}"'), stdout=subprocess.PIPE).stdout)['streams'][0]['bit_rate'])
+                target_bitrate = accual_bitrate * ((100 - comporession_rate)/100)
                 newpath = os.path.join(folder, 'compressed_' + filename)
-                os.system(f'ffmpeg -i "{path}" -vcodec h264 -crf {comporession_rate} "{newpath}"')
+                os.system(f'ffmpeg -i "{path}" -vcodec h264 -crf {comporession_rate} -maxrate {target_bitrate} -bufsize 128M "{newpath}"')
         
         self.work_status.config(text="%.2f seconds" % (time.time()-start))
         tk.messagebox.showinfo('Done', 'Done')
