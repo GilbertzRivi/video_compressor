@@ -7,7 +7,7 @@ ffmpeg, ffprobe added to PATH
 python libs: os, tkinter, json, subprocess, shlex, time
 ```
 
-To use it, first open main.py, then select video files you want to compress (only mp4, mkv and mov).
+To use it, first open main.py, then select video files you want to compress (only mp4 and mov).
 
 Choose if you want to use bitrate compression or auto compression mode. When using bitrate compression you can choose the bitrate of compressed videos. 
 It will be equal to the current bitrate * slider number(%). 
