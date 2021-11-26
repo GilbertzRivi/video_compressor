@@ -1,6 +1,6 @@
 import os, shutil, tkinter.filedialog, json, subprocess, shlex, time
 import tkinter as tk
-from tkinter.constants import END
+from tkinter.constants import END, HORIZONTAL
 from threading import Thread
 
 class MainWindow():
@@ -9,10 +9,10 @@ class MainWindow():
         self.root = root
         
         self.video_files = tk.Button(self.root, height=1, width=20, text="choose files", command=self.select_videos)
-        self.video_files.place(x=105, y=20)
+        self.video_files.place(x=20, y=20)
 
         self.videos_frame = tk.Frame(self.root)
-        self.videos_frame.place(x=20, y=50)
+        self.videos_frame.place(x=20, y=55)
         self.videos_names = tk.Listbox(self.videos_frame, height=10, width=50)
         self.videos_names.grid(column=0, row=1)
         self.videos_scrolly = tk.Scrollbar(self.videos_frame, orient='vertical')
@@ -24,7 +24,7 @@ class MainWindow():
         self.videos_names.configure(xscrollcommand=self.videos_scrollx.set, yscrollcommand=self.videos_scrolly.set)
 
         self.compression_type_frame = tk.Frame(self.root, height=100, width=200, background='#f0f0f0')
-        self.compression_type_frame.place(x=105, y=235)
+        self.compression_type_frame.place(x=20, y=245)
         self.compression_type_var = tk.IntVar()
         self.compression_type = tk.Radiobutton(self.compression_type_frame, variable=self.compression_type_var,
             value=0, text='Bitrate compression', command=self.compresion_factor)
@@ -33,17 +33,18 @@ class MainWindow():
             value=1, text='Automatic compression', command=self.compresion_factor)
         self.compression_type.pack(anchor="w")
 
+        self.bitrate_number = tk.Label(text='Choose compresion rate.\nHigher value is higher compression.', justify='left')
+        self.bitrate_number.place(x=20, y=300)
+
+        self.compression_number_slider = tk.Scale(self.root, from_=0, to=99, orient=HORIZONTAL, length=300)
+        self.compression_number_slider.place(x=20, y=345)
+
         self.action_button = tk.Button(self.root, height=1, width=20, text='Compress', command=self.compress)
-        self.action_button.place(x=105, y=335)
-        
-        self.compression_number_inputbox = tk.Entry(width=20)
-        self.compression_number_inputbox.place(x=117, y=310)
+        self.action_button.place(x=20, y=395)
 
-        self.work_status = tk.Label(width=17, height=1, background='#2e2e2e', foreground='#fff')
-        self.work_status.place(x=117,y=365)
+        self.work_status = tk.Label(width=17, height=1)
+        self.work_status.place(x=20,y=430)
 
-        self.bitrate_number = tk.Label(background='#2e2e2e', foreground='#fff', text='Choose compresion rate 0-99')
-        self.bitrate_number.place(x=100, y=285)
     
     def select_videos(self):
         video_paths = tkinter.filedialog.askopenfilenames()
@@ -70,8 +71,8 @@ class MainWindow():
             except:
                 pass
 
-            self.bitrate_number = tk.Label(background='#2e2e2e', foreground='#fff', text='Choose compresion rate 0-99')
-            self.bitrate_number.place(x=100, y=285)
+            self.bitrate_number = tk.Label(text='Choose compresion rate.\nHigher value is higher compression.')
+            self.bitrate_number.place(x=20, y=300)
 
         elif self.compression_type_var.get() == 1:
             try:
@@ -79,8 +80,8 @@ class MainWindow():
             except:
                 pass
 
-            self.crf_number_label = tk.Label(background='#2e2e2e', foreground='#fff', text='Choose compresion rate 0-51')
-            self.crf_number_label.place(x=100, y=285)
+            self.crf_number_label = tk.Label(text='Choose compresion rate.\nHigher value is higher compression.')
+            self.crf_number_label.place(x=20, y=300)
 
     def compress(self):
         
@@ -92,14 +93,7 @@ class MainWindow():
                 return
 
         if self.compression_type_var.get() == 0:
-            comporession_rate = self.compression_number_inputbox.get()
-            try:
-                comporession_rate = int(comporession_rate)
-                if comporession_rate < 0 or comporession_rate > 99:
-                    raise ValueError
-            except:
-                tk.messagebox.showerror('Invalid compration rate', 'Compresion rate must be in range 0-99')
-                return
+            comporession_rate = self.compression_number_slider.get()
 
             start = time.time()
 
@@ -111,14 +105,7 @@ class MainWindow():
                 os.system(f'ffmpeg -i "{path}" -vcodec h264 -b {target_bitrate} "{newpath}"')
 
         elif self.compression_type_var.get() == 1:
-            comporession_rate = self.compression_number_inputbox.get()
-            try:
-                comporession_rate = int(comporession_rate)
-                if comporession_rate < 0 or comporession_rate > 51:
-                    raise ValueError
-            except:
-                tk.messagebox.showerror('Invalid compration rate', 'Compresion rate must be in range 0-51')
-                return
+            comporession_rate = int((self.compression_number_slider.get()+3)/2)
 
             start = time.time()
 
@@ -134,7 +121,7 @@ class MainWindow():
 root = tk.Tk()
 root.title('Video Compressor')
 root.resizable(width=False, height=False)
-root.geometry('360x400')
+root.geometry('360x470')
 root.configure(background='#2e2e2e')
 
 VideoCompressor = MainWindow(root)
