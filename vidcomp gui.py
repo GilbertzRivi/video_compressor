@@ -67,7 +67,7 @@ class MainWindow():
         if self.compression_type_var.get() == 0:
             try:
                 self.crf_number_label.destroy()
-            except:
+            except Exception:
                 pass
 
             self.bitrate_number = tk.Label(text='Choose compresion rate.\nHigher value is higher compression.')
@@ -76,7 +76,7 @@ class MainWindow():
         elif self.compression_type_var.get() == 1:
             try:
                 self.bitrate_number.destroy()
-            except:
+            except Exception:
                 pass
 
             self.crf_number_label = tk.Label(text='Choose compresion rate.\nHigher value is higher compression.')
