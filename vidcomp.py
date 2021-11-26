@@ -8,7 +8,7 @@ if not os.path.isabs(path_to_videos):
 compression_factor = input('Input compression rate 0-99: ')
 try: 
     compression_factor = int(compression_factor)
-except:
+except Exception:
     print('Invalid compression factor')
     
 if compression_factor not in range(0,99):
