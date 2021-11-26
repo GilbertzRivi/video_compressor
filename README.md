@@ -22,5 +22,4 @@ After completion of compression, you can see how much time it took.
 I've also made command line tool, you can use it similarly to the gui one. 
 
 To add this script to right click menu, you have to insert 'YOUR_PATH_TO_THIS_FILE' in reg_key.py and run it as administrator.
-
-You also need winregistry lib for this.
+You also need to install winregistry lib.
