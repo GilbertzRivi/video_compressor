@@ -1,7 +1,6 @@
-import os, shutil, tkinter.filedialog, json, subprocess, shlex, time
+import os, tkinter.filedialog, json, subprocess, shlex, time
 import tkinter as tk
 from tkinter.constants import END, HORIZONTAL
-from threading import Thread
 
 class MainWindow():
 
