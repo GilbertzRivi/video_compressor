@@ -8,6 +8,6 @@ It will be current bitrate * slider number%.
 Auto compression uses ffmpeg crf compression, its more effective and faster. The slider will affect compression factor. 
 Higher number = bigger compresion. 
 
-Then click compress and wait untill "Done" window pops up.
+Then click compress and wait untill "Done" window pops up. Don't worry if the windows will be unresponding, just wait. In cmd windows, you can see the progress program  has already made.
 
-below you can see how much time the operation took.
+After completion of compression, you can see how much time it took.
