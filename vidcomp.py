@@ -2,6 +2,10 @@ import os, json, subprocess, shlex
 from time import time
 
 path_to_videos = input('Insert path to the folder with videos or video you want to compress: ')
+if not os.path.isabs(path_to_videos):
+    os.path.abspath(path_to_videos)
+
+print(path_to_videos)
 
 compression_factor = input('Input compression rate 0-99: ')
 try: 
@@ -44,10 +48,13 @@ if os.path.isfile(path_to_videos):
 
 elif os.path.isdir(path_to_videos):
     for path in os.listdir(path_to_videos):
+
+        path = os.path.join(path_to_videos, path)
+        
         if path[-3:] not in ['mp4', 'mov'] or os.path.isdir(path):
             print(f'skipped {path}')
             continue
-
+        
         if compression_type == 'a':
             folder, filename = os.path.split(path)
             newpath = os.path.join(folder, 'compressed_' + filename)
