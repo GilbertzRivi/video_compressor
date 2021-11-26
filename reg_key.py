@@ -9,4 +9,4 @@ key = winreg.CreateKeyEx(winreg.HKEY_CLASSES_ROOT, key_path)
 winreg.SetValue(key, '', winreg.REG_SZ, '&Compress Videos')
 
 key1 = winreg.CreateKeyEx(key, r"command")
-winreg.SetValue(key1, '', winreg.REG_SZ, python_exe + f' "C:\\PATH_proggams\\vidcomp_rc.py"',)
+winreg.SetValue(key1, '', winreg.REG_SZ, python_exe + f' "'YOUR_PATH_TO_THIS_FILE'\\vidcomp_rc.py"',)
