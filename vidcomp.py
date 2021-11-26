@@ -5,8 +5,6 @@ path_to_videos = input('Insert path to the folder with videos or video you want 
 if not os.path.isabs(path_to_videos):
     os.path.abspath(path_to_videos)
 
-print(path_to_videos)
-
 compression_factor = input('Input compression rate 0-99: ')
 try: 
     compression_factor = int(compression_factor)
