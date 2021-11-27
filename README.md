@@ -23,3 +23,5 @@ I've also made command line tool, you can use it similarly to the gui one.
 
 To add this script to right click menu, you have to insert 'YOUR_PATH_TO_THIS_FILE' in reg_key.py and run it as administrator.
 You also need to install winregistry lib.
+
+If you want to increase compression rate while compressing with right click, change compression_factor to bigger number (max 51) in vidcomp_rc.py
