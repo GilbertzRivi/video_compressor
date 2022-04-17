@@ -1,5 +1,6 @@
 import os, tkinter.filedialog, json, subprocess, shlex, time
 import tkinter as tk
+from tkinter import messagebox
 from tkinter.constants import END, HORIZONTAL
 
 class MainWindow():
@@ -50,7 +51,7 @@ class MainWindow():
         not_vid_notification = False
         video_paths_sanitized = []
         for path in video_paths:
-            if path[-3:] not in ['mp4', 'mov']:
+            if path[-3:].lower() not in ['mp4', 'mov']:
                 not_vid_notification = True
                 continue
             else:
