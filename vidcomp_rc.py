@@ -8,7 +8,7 @@ for path in os.listdir(path_to_videos):
 
     path = os.path.join(path_to_videos, path)
     
-    if path[-3:] not in ['mp4', 'mov'] or os.path.isdir(path):
+    if path[-3:].lower() not in ['mp4', 'mov'] or os.path.isdir(path):
         continue
     
     folder, filename = os.path.split(path)
