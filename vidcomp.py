@@ -28,7 +28,7 @@ if compression_type == 'a':
 start = time()
 
 if os.path.isfile(path_to_videos):
-    if path_to_videos[-3:] not in ['mp4', 'mov'] or os.path.isdir(path_to_videos):
+    if path_to_videos[-3:].lower() not in ['mp4', 'mov'] or os.path.isdir(path_to_videos):
         print(f'{path_to_videos} is not a valid file')
         exit()
 
